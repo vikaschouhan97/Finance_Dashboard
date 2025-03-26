@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Home, WalletIcon, TrendingUp } from 'lucide-react';
+import UserProfile from '@/components/auth/UserProfile';
 
 const navItems = [
   { name: 'Dashboard', path: '/', icon: Home },
@@ -42,9 +43,7 @@ const Header = () => {
           ))}
         </nav>
         <div className="ml-auto flex items-center space-x-4">
-          <div className="relative h-8 w-8 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-            <span className="text-xs font-medium">JD</span>
-          </div>
+          <UserProfile />
         </div>
       </div>
     </header>
