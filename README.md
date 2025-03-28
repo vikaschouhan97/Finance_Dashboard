@@ -1,5 +1,7 @@
 # Project Name
 
+![alt text](image.png)
+
 ## Getting Started
 
 To set up and run this project locally, follow these steps:
