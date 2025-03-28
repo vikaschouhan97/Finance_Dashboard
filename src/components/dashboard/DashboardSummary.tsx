@@ -12,7 +12,7 @@ interface SummaryCardProps {
   icon: React.ReactNode;
 }
 
-const SummaryCard = ({ title, value, change, isPositive, icon }: SummaryCardProps) => (
+const SummaryCard = ({ title, value, isPositive, icon }: SummaryCardProps) => (
   <Card className="overflow-hidden transition-all hover:shadow-md">
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
@@ -21,39 +21,29 @@ const SummaryCard = ({ title, value, change, isPositive, icon }: SummaryCardProp
       </div>
     </CardHeader>
     <CardContent>
-      <div className="text-2xl font-bold">{value}</div>
-      {change && (
-        <p className={cn(
-          "text-xs flex items-center space-x-1 mt-1",
-          isPositive ? "text-green-500" : "text-red-500"
-        )}>
-          {isPositive ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />}
-          <span>{change} from last month</span>
-        </p>
-      )}
+      <div className={cn("text-2xl font-bold", isPositive ? "text-green-500" : "text-red-500")}>{value}</div>
     </CardContent>
   </Card>
 );
 
-const DashboardSummary = () => {
+const DashboardSummary = ({balances}) => {
   return (
     <div className="grid gap-4 md:grid-cols-3">
       <SummaryCard
-        title="Total Balance"
-        value="$24,830.00"
+        title="Balance"
+        value={`$ ${balances.balance}`}
+        isPositive={true}
         icon={<Wallet className="h-4 w-4 text-muted-foreground" />}
       />
       <SummaryCard
-        title="Monthly Income"
-        value="$5,240.00"
-        change="8.2%"
+        title="Total Income"
+        value={`$ ${balances.total}`}
         isPositive={true}
         icon={<ArrowUp className="h-4 w-4 text-green-500" />}
       />
       <SummaryCard
-        title="Monthly Expenses"
-        value="$3,460.00"
-        change="2.3%"
+        title="Total Expense"
+        value={`$ ${balances.expense}`}
         isPositive={false}
         icon={<ArrowDown className="h-4 w-4 text-red-500" />}
       />

@@ -30,7 +30,19 @@ const goals = [
   },
 ];
 
-const SavingsGoals = () => {
+const target = (type: string) => {
+  if (type === "Emergency fund") return 20000;
+  else if (type === "New Car") return 50000;
+  else if (type === "Investment") return 10000;
+};
+
+const deadline = (type: string) => {
+  if (type === "Emergency fund") return "Dec 2023";
+  else if (type === "New Car") return "Jul 2024";
+  else if (type === "Investment") return "Mar 2024";
+};
+
+const SavingsGoals = ({ savings }) => {
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -38,29 +50,24 @@ const SavingsGoals = () => {
           <CardTitle>Savings Goals</CardTitle>
           <CardDescription>Track your progress towards financial goals</CardDescription>
         </div>
-        <Button size="sm" className="h-8 gap-1">
-          <Plus className="h-4 w-4" />
-          <span>New Goal</span>
-        </Button>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {goals.map((goal) => {
-            const progress = Math.round((goal.current / goal.target) * 100);
-            
+          {savings.map((goal) => {
+            const progress = Math.round((goal.amount / target(goal.category)) * 100);
             return (
               <div key={goal.id} className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-medium">{goal.name}</h4>
+                  <h4 className="font-medium">{goal.category}</h4>
                   <span className="text-sm font-semibold">{progress}%</span>
                 </div>
                 <div className="flex justify-between items-center text-sm text-muted-foreground">
-                  <span>${goal.current.toLocaleString()}</span>
-                  <span>${goal.target.toLocaleString()}</span>
+                  <span>${goal.amount}</span>
+                  <span>${target(goal.category)}</span>
                 </div>
                 <Progress value={progress} className="h-2" />
                 <div className="text-xs text-muted-foreground text-right">
-                  Target date: {goal.deadline}
+                  Target date: {deadline(goal.category)}
                 </div>
               </div>
             );

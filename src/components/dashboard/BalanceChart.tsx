@@ -20,7 +20,8 @@ const BalanceChart = () => {
     <Card className="col-span-1 md:col-span-2 overflow-hidden transition-all hover:shadow-md">
       <CardHeader>
         <CardTitle>Balance History</CardTitle>
-        <CardDescription>Your account balance over time</CardDescription>
+        <CardDescription>Your account balance over time, Note - This is hardcoded data</CardDescription>
+
       </CardHeader>
       <CardContent>
         <div className="h-[300px] w-full">

@@ -8,7 +8,6 @@ import UserProfile from '@/components/auth/UserProfile';
 const navItems = [
   { name: 'Dashboard', path: '/', icon: Home },
   { name: 'Transactions', path: '/transactions', icon: WalletIcon },
-  { name: 'Goals', path: '/goals', icon: TrendingUp }
 ];
 
 const Header = () => {

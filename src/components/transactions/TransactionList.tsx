@@ -5,70 +5,25 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
-// Sample transaction data
-const transactions = [
-  {
-    id: '1',
-    date: '2023-08-22',
-    description: 'Grocery Store',
-    amount: -125.30,
-    category: 'Food',
-  },
-  {
-    id: '2',
-    date: '2023-08-21',
-    description: 'Monthly Salary',
-    amount: 5240.00,
-    category: 'Income',
-  },
-  {
-    id: '3',
-    date: '2023-08-20',
-    description: 'Electric Bill',
-    amount: -85.65,
-    category: 'Utilities',
-  },
-  {
-    id: '4',
-    date: '2023-08-18',
-    description: 'Restaurant',
-    amount: -64.20,
-    category: 'Food',
-  },
-  {
-    id: '5',
-    date: '2023-08-15',
-    description: 'Gas Station',
-    amount: -48.75,
-    category: 'Transport',
-  },
-  {
-    id: '6',
-    date: '2023-08-14',
-    description: 'Movie Tickets',
-    amount: -32.50,
-    category: 'Entertainment',
-  },
-  {
-    id: '7',
-    date: '2023-08-10',
-    description: 'Phone Bill',
-    amount: -59.99,
-    category: 'Utilities',
-  },
-  {
-    id: '8',
-    date: '2023-08-05',
-    description: 'Freelance Work',
-    amount: 850.00,
-    category: 'Income',
-  }
-];
+function formatDateTime(inputDate: string): string {
+  console.log("inputDate", inputDate);
+  const date = new Date(inputDate);
+  
+  // Extract components
+  const year: number = date.getFullYear();
+  const month: string = String(date.getMonth() + 1).padStart(2, '0');
+  const day: string = String(date.getDate()).padStart(2, '0');
+  const hours: string = String(date.getHours()).padStart(2, '0');
+  const minutes: string = String(date.getMinutes()).padStart(2, '0');
+  const seconds: string = String(date.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 
 // Categories for filtering
-const categories = ['All', 'Income', 'Food', 'Transport', 'Utilities', 'Entertainment', 'Other'];
+const categories = ['All', 'Credit', 'Food', 'Transport', 'Utilities', 'Entertainment', 'Other'];
 
-const TransactionList = () => {
+const TransactionList = ({transactions}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
 
@@ -79,9 +34,8 @@ const TransactionList = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const getTransactionType = (type: string) => {
+    return (type === "credit" || type === "savings")
   };
 
   return (
@@ -126,25 +80,25 @@ const TransactionList = () => {
                 <div className="flex items-center space-x-4">
                   <div className={cn(
                     "w-10 h-10 rounded-full flex items-center justify-center",
-                    transaction.amount > 0 ? "bg-green-100" : "bg-red-100"
+                    getTransactionType(transaction.type) ? "bg-green-100" : "bg-red-100"
                   )}>
                     <span className={cn(
                       "text-sm font-semibold",
-                      transaction.amount > 0 ? "text-green-600" : "text-red-600"
+                      getTransactionType(transaction.type) ? "text-green-600" : "text-red-600"
                     )}>
-                      {transaction.amount > 0 ? "+" : "-"}
+                      {getTransactionType(transaction.type) ? "+" : "-"}
                     </span>
                   </div>
                   <div>
                     <h4 className="font-medium">{transaction.description}</h4>
-                    <p className="text-sm text-muted-foreground">{formatDate(transaction.date)} · {transaction.category}</p>
+                    <p className="text-sm text-muted-foreground">{formatDateTime(transaction.created_at)} · {transaction.category}</p>
                   </div>
                 </div>
                 <div className={cn(
                   "font-semibold",
-                  transaction.amount > 0 ? "text-green-600" : "text-red-600"
+                  getTransactionType(transaction.type) ? "text-green-600" : "text-red-600"
                 )}>
-                  {transaction.amount > 0 ? "+" : ""}
+                  {getTransactionType(transaction.type) ? "+" : ""}
                   ${Math.abs(transaction.amount).toFixed(2)}
                 </div>
               </div>

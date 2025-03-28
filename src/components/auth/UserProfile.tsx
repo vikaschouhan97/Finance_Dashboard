@@ -1,8 +1,6 @@
-
-import React from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
+import React from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/components/ui/use-toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +8,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { LogOut, User } from 'lucide-react';
+} from "@/components/ui/dropdown-menu";
+import { LogOut } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const UserProfile = () => {
   const { user, signOut } = useAuth();
@@ -27,18 +26,20 @@ const UserProfile = () => {
 
   if (!user) return null;
 
-  const userInitials = user.email 
-    ? user.email.substring(0, 2).toUpperCase() 
-    : 'JD';
+  const userInitials = user.email
+    ? user.email.substring(0, 2).toUpperCase()
+    : "JD";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <div className="relative h-8 w-8 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-            <span className="text-xs font-medium">{userInitials}</span>
-          </div>
-        </Button>
+        <Avatar>
+          <AvatarImage
+            className="cursor-pointer"
+            src="https://github.com/shadcn.png"
+          />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">

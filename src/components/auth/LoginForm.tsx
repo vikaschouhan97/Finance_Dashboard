@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -12,14 +13,15 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { signIn, error } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
     try {
-      await signIn(email, password);
-      if (error) {
+     const res = await signIn(email, password);
+      if (!res) {
         toast({
           title: "Error signing in",
           description: error,
@@ -30,6 +32,7 @@ const LoginForm = () => {
           title: "Success!",
           description: "You have successfully signed in.",
         });
+        navigate("/");
       }
     } catch (err) {
       toast({
