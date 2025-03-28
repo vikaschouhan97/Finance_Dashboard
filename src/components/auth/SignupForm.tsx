@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
@@ -79,7 +80,7 @@ const SignupForm = () => {
       </CardContent>
       <CardFooter className="flex justify-center">
         <p className="text-sm text-muted-foreground">
-          Already have an account? <a href="/login" className="text-primary hover:underline">Sign in</a>
+          Already have an account? <Link to="/login" className="text-primary hover:underline">Sign in</Link>
         </p>
       </CardFooter>
     </Card>
